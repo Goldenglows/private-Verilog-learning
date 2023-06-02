@@ -1,0 +1,90 @@
+`timescale 1ns / 1ps
+
+module Register_file_tb;
+
+  // ??????
+  reg [1:0] R_Addr;
+  reg [1:0] W_Addr;
+  reg Write_Reg;
+  reg [7:0] W_Data;
+  wire [7:0] R_Data;
+  reg clk;
+  reg reset;
+
+  // ???????
+  Register_file_sim dut (
+    .R_Addr(R_Addr),
+    .W_Addr(W_Addr),
+    .Write_Reg(Write_Reg),
+    .W_Data(W_Data),
+    .clk(clk),
+    .reset(reset),
+    .R_Data(R_Data)
+  );
+
+  // ??????
+  always begin
+    clk = 0;
+    #5;
+    clk = 1;
+    #5;
+  end
+
+  // ???????
+  initial begin
+    reset = 1;
+    #10;
+    reset = 0;
+  end
+
+  // ????????
+  initial begin
+    // ???????? 0
+    W_Addr = 0;
+    W_Data = 16'h1234;
+    Write_Reg = 1;
+    #10;
+    Write_Reg = 0;
+
+    // ???????? 1
+    W_Addr = 1;
+    W_Data = 16'h5678;
+    Write_Reg = 1;
+    #10;
+    Write_Reg = 0;
+
+    // ???????? 2
+    W_Addr = 2;
+    W_Data = 16'h9abc;
+    Write_Reg = 1;
+    #10;
+    Write_Reg = 0;
+
+    // ???????? 3
+    W_Addr = 3;
+    W_Data = 16'hdef0;
+    Write_Reg = 1;
+    #10;
+    Write_Reg = 0;
+
+    // ????? 0 ??
+    R_Addr = 0;
+    #10;
+
+    // ????? 1 ??
+    R_Addr = 1;
+    #10;
+
+    // ????? 2 ??
+    R_Addr = 2;
+    #10;
+
+    // ????? 3 ??
+    R_Addr = 3;
+    #10;
+
+    // ????
+    $finish;
+  end
+
+endmodule
